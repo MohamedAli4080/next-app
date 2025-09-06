@@ -1,6 +1,8 @@
 import Image from "next/image";
-
-export default function Home() {
+import { getServerSession } from "next-auth";
+import { authOptions } from "./api/auth/[...nextauth]/route";
+export default async function Home() {
+  const session = await getServerSession(authOptions);
   return (
     <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
       <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
@@ -21,7 +23,8 @@ export default function Home() {
             .
           </li>
           <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
+            Save and see your changes instantly.{" "}
+            {session && <p>Welcome {session.user?.name}</p>}
           </li>
         </ol>
 
